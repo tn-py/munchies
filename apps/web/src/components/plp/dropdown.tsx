@@ -86,7 +86,7 @@ function Caret({ isOpen }: { isOpen: boolean }) {
       <title>Caret</title>
       <path
         d="M6 9L12 15L18 9"
-        stroke="#FF5227"
+        stroke="currentColor"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="1.5"

@@ -13,7 +13,7 @@ export default function ProductOg({
   return {
     type: "div",
     props: {
-      tw: "flex justify-between p-8 items-center w-full h-full text-[#FF5227] bg-[#FFF6E6]",
+      tw: "flex justify-between p-8 items-center w-full h-full text-[#F3F5EC] bg-[#0E0F0B]",
       children: [
         {
           type: "div",
@@ -25,7 +25,7 @@ export default function ProductOg({
                 props: {
                   style: { fontFamily: "Climate Crisis" },
                   tw: "flex uppercase text-[43px]",
-                  children: "Munchies",
+                  children: "Best Vapes",
                 },
               },
               {
@@ -54,7 +54,7 @@ export default function ProductOg({
               {
                 type: "div",
                 props: {
-                  tw: "flex py-[6px] px-[36px] text-[#FFF6E6] bg-[#FF5227] rounded-full text-[40px] leading-[150%] tracking-[-1px]",
+                  tw: "flex py-[6px] px-[36px] text-[#0E0F0B] bg-[#C6FF1A] rounded-full text-[40px] leading-[150%] tracking-[-1px]",
                   children: "Shop now",
                 },
               },
@@ -75,7 +75,7 @@ export default function ProductOg({
                       objectFit: "cover",
                       objectPosition: "bottom",
                     },
-                    tw: "h-full w-full rounded-lg border border-[#FF5227]",
+                    tw: "h-full w-full rounded-lg border border-[#C6FF1A]",
                   },
                 }
               : null,

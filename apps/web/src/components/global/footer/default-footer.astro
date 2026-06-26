@@ -18,9 +18,9 @@ const footer = Astro.props;
   {footer.signup_error ? <RichText slot="errorNode" value={footer.signup_error} /> : null}
 </NewsLetter>
 
-<footer class="w-full bg-accent" id="footer">
+<footer class="w-full border-highlight border-t-2 bg-secondary" id="footer">
   <div
-    class="mx-auto flex w-full max-w-max-screen flex-col gap-2xl px-m pt-6xl pb-m text-background lg:px-xl lg:pb-xl"
+    class="mx-auto flex w-full max-w-max-screen flex-col gap-2xl px-m pt-6xl pb-m text-accent lg:px-xl lg:pb-xl"
   >
     <TopLinks {...footer} />
     {footer.image ? (

@@ -23,12 +23,12 @@ export function HeaderClient({
           <Hamburger countries={countries} data={header} />
           <LocalizedLink href="/">
             <img
-              alt="Mubchies logo"
-              className="my-2.25 h-5.5 w-auto lg:my-2.5 lg:h-9"
-              height={36}
+              alt="Best Vapes logo"
+              className="my-1.5 h-10 w-auto lg:my-2 lg:h-12"
+              height={46}
               loading="eager"
-              src="/images/logo.svg"
-              width={375}
+              src="/images/best-vapes-logo.png"
+              width={48}
             />
           </LocalizedLink>
         </div>
