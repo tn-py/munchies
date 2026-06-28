@@ -10,7 +10,10 @@ export function Tag({
 }) {
   return (
     <Label
-      className={cx("bg-secondary px-1 py-px text-end text-accent", className)}
+      className={cx(
+        "bg-highlight px-1 py-px text-end text-background",
+        className
+      )}
       desktopSize="sm"
       font="display"
       mobileSize="2xs"

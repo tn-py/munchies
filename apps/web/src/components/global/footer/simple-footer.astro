@@ -8,9 +8,9 @@ type Props = FooterType;
 const footer = Astro.props;
 ---
 
-<footer class="w-full bg-accent" id="footer">
+<footer class="w-full border-highlight border-t-2 bg-secondary" id="footer">
   <div
-    class="mx-auto flex w-full max-w-max-screen flex-col gap-xl px-m py-xl text-background lg:px-xl"
+    class="mx-auto flex w-full max-w-max-screen flex-col gap-xl px-m py-xl text-accent lg:px-xl"
   >
     {footer.image ? <SanityImage className="lg:mt-2xl" data={footer.image} /> : null}
     <div class="flex w-full justify-between lg:justify-start lg:gap-6xl">

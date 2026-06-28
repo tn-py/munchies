@@ -7,7 +7,7 @@ import { LocalizedLink } from "./localized-link";
 
 export const styles = cva(
   cx(
-    "relative flex w-fit items-center justify-center whitespace-nowrap rounded-[999px] font-serif leading-[150%] transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+    "relative flex w-fit items-center justify-center whitespace-nowrap rounded-[999px] font-serif leading-[150%] transition-all duration-300 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-highlight focus-visible:ring-offset-2 focus-visible:ring-offset-background",
     "disabled:cursor-not-allowed disabled:opacity-50"
   ),
   {
@@ -29,7 +29,7 @@ export const styles = cva(
         outline:
           "border-[1.5px] border-accent bg-transparent text-accent hover:bg-accent hover:text-background disabled:border-accent disabled:bg-transparent disabled:text-accent group-hover:bg-accent group-hover:text-background",
         primary:
-          "border-[1.5px] border-accent bg-accent text-background hover:bg-background hover:text-accent disabled:border-accent disabled:bg-accent disabled:text-background group-hover:bg-accent group-hover:text-background",
+          "border-[1.5px] border-highlight bg-highlight text-background hover:bg-transparent hover:text-highlight disabled:border-highlight disabled:bg-highlight disabled:text-background group-hover:bg-highlight group-hover:text-background",
       },
     },
   }

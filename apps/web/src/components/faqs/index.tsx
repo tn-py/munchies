@@ -138,7 +138,7 @@ export function FAQs({ data }: { data: NonNullable<FAQS_PAGE_QUERY_RESULT> }) {
   };
   return (
     <div className="scroll-mt-header-height flex-col items-center justify-center">
-      <section className="flex w-full flex-col items-center justify-center gap-1 bg-accent px-xl py-8xl text-center text-background">
+      <section className="flex w-full flex-col items-center justify-center gap-1 bg-secondary px-xl py-8xl text-center text-accent">
         <Heading
           className="heading-l mx-auto w-fit"
           desktopSize="5xl"
@@ -221,7 +221,7 @@ const HighlitedText = ({
 }) =>
   question?.split(new RegExp(`(${query})`, "gi"))?.map((part, index) =>
     part.toLowerCase() === query.toLowerCase() ? (
-      <span className="bg-accent text-background" key={index.toString()}>
+      <span className="bg-highlight text-background" key={index.toString()}>
         {part}
       </span>
     ) : (

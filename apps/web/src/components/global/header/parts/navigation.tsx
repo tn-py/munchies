@@ -104,7 +104,7 @@ export const Navigation = function Navigation({ data }: { data: Header }) {
         <NavigationMenu.Viewport className="relative mx-auto h-(--radix-navigation-menu-viewport-height) w-full origin-[top_center] bg-background transition-[width,height] duration-300 data-[state=closed]:animate-exitToTop data-[state=open]:animate-enterFromTop" />
         <div
           className={cx(
-            "relative w-full bg-accent transition-all duration-300",
+            "relative w-full bg-highlight transition-all duration-300",
             {
               "h-[1.5px] animate-enterFromTop": openDropdown,
               "h-0 animate-exitToTop": !openDropdown,

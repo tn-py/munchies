@@ -8,6 +8,8 @@
   --color-accent: var(--accent);
   --color-accent-40: var(--accent-40);
   --color-secondary: var(--secondary);
+  --color-highlight: var(--highlight);
+  --color-highlight-40: var(--highlight-40);
   --color-error: var(--error);
   --text-body-8xl: var(--body-8xl);
   --text-body-6xl: var(--body-6xl);
@@ -194,11 +196,14 @@
   --header-height: 60px;
 
   /* colors */
-  --background: #fff6e6;
-  --accent: #ff5227;
-  --accent-40: rgba(255, 82, 39, 0.4);
-  --secondary: #f9dff2;
-  --error: #ff0000;
+  /* Best Vapes dark-neon palette (highlight: #c6ff1a) */
+  --background: #0e0f0b; /* near-black page surface */
+  --accent: #f3f5ec; /* near-white "ink": text, borders, hairlines */
+  --accent-40: rgba(243, 245, 236, 0.4);
+  --secondary: #1b1e13; /* elevated dark surface: panels, bands, footer */
+  --highlight: #c6ff1a; /* lime: CTAs, tags, active states, accents */
+  --highlight-40: rgba(198, 255, 26, 0.4);
+  --error: #ff5a5a;
 
   --base-font-size: 16px;
   /* font sizes */
@@ -293,7 +298,7 @@
   .newletter-text:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
     box-shadow: 0 0 0px 1000px transparent inset !important;
-    -webkit-text-fill-color: #ff5227 !important;
+    -webkit-text-fill-color: var(--accent) !important;
     transition: background-color 5000s ease-in-out 0s !important;
   }
 
@@ -302,18 +307,18 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #ff52273c;
+    background: rgba(198, 255, 26, 0.18);
     border-radius: 10px;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #ff5227;
+    background-color: var(--highlight);
     border-radius: 10px;
   }
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: #ff5227 #ff52273c;
+    scrollbar-color: var(--highlight) rgba(198, 255, 26, 0.18);
   }
 
   button:not(:disabled),
