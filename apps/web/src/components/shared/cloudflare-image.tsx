@@ -43,6 +43,11 @@ export function buildCloudflareUrl({
   quality = 75,
   format = "avif",
 }: BuildCloudflareUrlOptions): string {
+  // cdn-cgi/image is only available on the Cloudflare edge; skip it locally
+  if (process.env.NODE_ENV === "development") {
+    return src;
+  }
+
   const options = [
     `width=${width}`,
     `height=${height}`,

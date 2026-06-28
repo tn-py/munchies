@@ -24,3 +24,14 @@ export const getProductsByIds = withCache(
   },
   (ids) => [BASE_TAG, ...ids.map((id) => `${BASE_TAG}:${id}`)]
 );
+
+export const getProductsByCollectionId = withCache(
+  (collectionId: string, region_id: string) => {
+    return medusa.store.product.list({
+      collection_id: [collectionId],
+      fields: "*variants.calculated_price,+variants.inventory_quantity",
+      region_id,
+    });
+  },
+  (collectionId) => [BASE_TAG, `collection:${collectionId}`]
+);

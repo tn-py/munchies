@@ -9,9 +9,17 @@ export default defineField({
       validation: (Rule) => Rule.required(),
     },
     {
+      name: "collection",
+      title: "Collection",
+      description: "When set, products are pulled dynamically from this collection (overrides the Products list below).",
+      type: "reference",
+      to: [{ type: "collection" }],
+    },
+    {
       name: "products",
       of: [{ to: [{ type: "product" }], type: "reference" }],
       title: "Products",
+      description: "Used only when no Collection is selected.",
       type: "array",
     },
     {

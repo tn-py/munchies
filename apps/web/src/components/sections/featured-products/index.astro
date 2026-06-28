@@ -1,5 +1,5 @@
 ---
-import { getProductsByIds } from "@/lib/medusa/products";
+import { getProductsByCollectionId, getProductsByIds } from "@/lib/medusa/products";
 import { getRegion } from "@/lib/medusa/regions";
 import type { ModularPageSection } from "../types";
 import { FeaturedProductsCarousel } from "./featured-products-carousel";
@@ -15,16 +15,31 @@ if (!region) {
   return null;
 }
 
-const ids =
-  props.products
-    ?.map((product) => product?._ref)
-    .filter((id) => id !== undefined) || [];
+// Prefer collection-based fetch; fall back to explicit product refs
+const collectionId = (props as any).collection?._ref as string | undefined;
 
-if (!ids || ids.length === 0) {
-  return null;
+let products: Awaited<ReturnType<typeof getProductsByIds>>["products"] = [];
+
+if (collectionId) {
+  const result = await getProductsByCollectionId(collectionId, region.id);
+  products = result.products;
+} else {
+  const ids =
+    props.products
+      ?.map((product) => product?._ref)
+      .filter((id) => id !== undefined) || [];
+
+  if (!ids.length) {
+    return null;
+  }
+
+  const result = await getProductsByIds(ids, region.id);
+  products = result.products;
 }
 
-const { products } = await getProductsByIds(ids, region.id);
+if (!products.length) {
+  return null;
+}
 ---
 
 <section {...props.rootHtmlAttributes}>

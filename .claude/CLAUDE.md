@@ -118,3 +118,74 @@ Biome's linter will catch most issues automatically. Focus your attention on:
 ---
 
 Most formatting and common issues are automatically fixed by Biome. Run `pnpm dlx ultracite fix` before committing to ensure compliance.
+
+---
+
+# Project Context — Best Vapes
+
+This is a **vape e-commerce store** (rebranded from the Munchies demo template). The stack is Medusa v2 + Astro 5 + Sanity, running locally via Docker Compose.
+
+## Running Locally
+
+```bash
+docker compose up -d          # start all 4 containers
+docker compose logs -f medusa # watch backend logs
+```
+
+After a fresh DB wipe + reseed, force-recreate containers to reload `.env`:
+```bash
+docker compose up -d --force-recreate medusa
+docker compose up -d --force-recreate web
+```
+
+> **Never use `docker restart`** for env changes — it reuses the original container config and ignores `.env` edits. Always use `--force-recreate`.
+
+## Key Gotchas
+
+### Prices are in whole display dollars
+`amount: 15` → displays as `$15.00`. The `convertToLocale` utility in `apps/web/src/lib/utils/medusa/money.ts` passes amounts directly to `Intl.NumberFormat` without dividing by 100. Set seed prices accordingly.
+
+### Sanity write access requires the editor token
+The `SANITY_TOKEN` / `SANITY_API_TOKEN` used in both apps must be the **editor token** (`sk3e0q7...`). The viewer token (`skdz...`) is read-only for `production` — mutations and product syncs will return 401 errors silently.
+
+### Sanity sync targets `production`
+`@tinloof/medusa-sanity-sync` in `medusa-config.ts` is set to `dataset: "production"`. After seeding, touch products via the admin API to fire `product.updated` and trigger the sync.
+
+### `workerd` needs `libc++1`
+The dev Dockerfile uses `node:20-slim` + `apt-get install libc++1`. Do not switch to Alpine — `workerd` silently fails without glibc.
+
+### Web container uses `network_mode: host`
+`wrangler` reads `MEDUSA_BACKEND_URL` from the `.env` file at request time, bypassing the container's `process.env`. Host networking makes `http://localhost:9000` resolve to the Medusa container's mapped port.
+
+## Sanity Home Page Sections
+
+Sections are managed via the Sanity Studio at `/cms` or the Mutations API. Available types:
+`section.hero`, `section.marquee`, `section.centeredText`, `section.featuredProducts`,
+`section.assurance`, `section.collectionList`, `section.mediaText`, `section.testimonials`, `section.shopTheLook`
+
+The `section.featuredProducts` section supports two modes:
+- **Collection ref** (preferred): set `collection._ref` to a Medusa collection ID → products load dynamically
+- **Products array** (manual fallback): list individual Sanity product `_ref` values
+
+## Re-seeding
+
+```bash
+# Wipe DB
+docker exec munchies-postgres psql -U medusa -d medusa_munchies \
+  -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public; GRANT ALL ON SCHEMA public TO medusa, public;"
+
+# Restart (runs migrations on boot)
+docker compose up -d --force-recreate medusa
+
+# Seed
+docker exec munchies-medusa sh -c "cd /app/apps/medusa-backend && pnpm seed"
+
+# Re-create admin user
+docker exec munchies-medusa sh -c "cd /app/apps/medusa-backend && pnpm add-user"
+
+# Update publishable key in both .env files after seed
+```
+
+## Product Images
+
+Generate at **1000×1000 px** (1:1 square). Upload via Medusa admin → Products → Media tab.
