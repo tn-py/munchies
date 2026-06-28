@@ -2,7 +2,9 @@
   "main": "dist/_worker.js/index.js",
   "name": "munchies-cf",
   "compatibility_date": "2026-01-21",
-  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  // global_fetch_strictly_public removed here — it blocks private-IP fetches in workerd dev mode.
+  // Add it back in a production Cloudflare Pages environment variable override if needed.
+  "compatibility_flags": ["nodejs_compat"],
   "routes": [
     { "pattern": "munchies.tinloof.com", "custom_domain": true }
   ],
