@@ -35,8 +35,8 @@ apps/
 ### 1 — Clone and install
 
 ```bash
-git clone https://github.com/tn-py/munchies.git
-cd munchies
+git clone https://github.com/tn-py/vape-munchies.git
+cd vape-munchies
 pnpm install
 ```
 
