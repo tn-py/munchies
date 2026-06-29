@@ -51,8 +51,10 @@ export default defineField({
     {
       hidden: ({ parent }) => parent?.mediaType !== "largeImage",
       name: "largeImage",
-      title: "Large Image",
+      title: "Large Image (Desktop)",
+      description: "Landscape banner shown on screens 768px and wider. Recommended size: 1920 × 1080 px (16:9).",
       type: "image",
+      options: { hotspot: true },
       validation: (Rule) =>
         Rule.custom((value, { parent }) => {
           const parentType = parent as { mediaType?: string };
@@ -60,6 +62,14 @@ export default defineField({
             ? "Required"
             : true;
         }),
+    },
+    {
+      hidden: ({ parent }) => parent?.mediaType !== "largeImage",
+      name: "mobileImage",
+      title: "Mobile Image (Optional)",
+      description: "Portrait banner shown on screens narrower than 768px. Recommended size: 1080 × 1350 px (4:5). Falls back to the desktop image if omitted.",
+      type: "image",
+      options: { hotspot: true },
     },
     {
       hidden: ({ parent }) => parent?.mediaType !== "video",
