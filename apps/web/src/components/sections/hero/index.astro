@@ -1,5 +1,5 @@
 ---
-import { SanityImage } from "@/components/shared/sanity-image";
+import { generateSanitySrcSet, SanityImage } from "@/components/shared/sanity-image";
 import { Video } from "@/components/shared/video";
 import type { ModularPageSection } from "../types";
 import LargeHero from "./large-hero.astro";
@@ -36,11 +36,22 @@ const props = Astro.props;
   )}
   {props.mediaType === "largeImage" && props.largeImage && (
     <LargeHero {...props}>
-      <SanityImage
-        className="hero-asset w-full rounded-lg object-cover object-center"
-        data={props.largeImage}
-        loading="eager"
-      />
+      <picture class="hero-asset block h-full w-full">
+        {props.mobileImage && (
+          <source
+            media="(max-width: 767px)"
+            srcset={generateSanitySrcSet(props.mobileImage, "4/5") ?? undefined}
+            sizes="100vw"
+          />
+        )}
+        <SanityImage
+          className="h-full w-full rounded-lg object-cover object-center"
+          data={props.largeImage}
+          fetchPriority="high"
+          loading="eager"
+          sizes="(max-width: 1440px) calc(100vw - 64px), 1500px"
+        />
+      </picture>
     </LargeHero>
   )}
 </section>
