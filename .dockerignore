@@ -3,7 +3,6 @@ apps/*/node_modules
 **/.next
 **/.turbo
 **/dist
-**/.medusa
 .git
 .claude
 *.log
