@@ -2,11 +2,13 @@ import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { config } from "dotenv";
 
-// Load env from web app
+// Local dev convenience: load from web app's .env if present. Not committed
+// to git, so this is a no-op in CI/Railway builds — those must set
+// MEDUSA_BACKEND_URL / MEDUSA_PUBLISHABLE_KEY as env vars on this service.
 config({ path: resolve(import.meta.dirname, "../../web/.env") });
 
-const MEDUSA_BACKEND_URL = process.env.PUBLIC_MEDUSA_BACKEND_URL;
-const MEDUSA_PUBLISHABLE_KEY = process.env.PUBLIC_MEDUSA_PUBLISHABLE_KEY;
+const MEDUSA_BACKEND_URL = process.env.MEDUSA_BACKEND_URL;
+const MEDUSA_PUBLISHABLE_KEY = process.env.MEDUSA_PUBLISHABLE_KEY;
 
 if (!(MEDUSA_BACKEND_URL && MEDUSA_PUBLISHABLE_KEY)) {
   console.error("Missing MEDUSA_BACKEND_URL or MEDUSA_PUBLISHABLE_KEY");
