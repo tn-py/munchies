@@ -25,7 +25,6 @@ coverage
 out/
 build
 dist
-.medusa/
 
 
 # Debug

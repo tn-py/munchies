@@ -25,6 +25,9 @@
   "html": {
     "experimentalFullSupportEnabled": false
   },
+  "files": {
+    "includes": ["!**/.medusa"]
+  },
   "formatter": {
     "includes": ["!**/*.astro"]
   },
