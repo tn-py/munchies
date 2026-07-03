@@ -55,12 +55,21 @@ MEDUSA_PUBLISHABLE_KEY=
 SANITY_API_TOKEN=
 SANITY_PROJECT_ID=
 
-# S3 Storage (optional)
-S3_FILE_URL=
-S3_REGION=
-S3_BUCKET=
-S3_ENDPOINT=
+# Backblaze B2 (S3-compatible) file storage — powers admin image uploads
+S3_FILE_URL=https://<bucket-name>.s3.<region>.backblazeb2.com
+S3_ACCESS_KEY_ID=<b2-application-key-id>
+S3_SECRET_ACCESS_KEY=<b2-application-key-secret>
+S3_REGION=<region>                                # e.g. us-west-004
+S3_BUCKET=<bucket-name>
+S3_ENDPOINT=https://s3.<region>.backblazeb2.com   # e.g. https://s3.us-west-004.backblazeb2.com
 ```
+
+#### Backblaze B2 setup (one-time)
+
+1. Create a B2 bucket (public bucket = simplest; a private bucket needs signed URLs or a CDN in front).
+2. Note the bucket's region (e.g. `us-west-004`) — the S3 endpoint is `https://s3.<region>.backblazeb2.com`.
+3. Create an **Application Key** scoped to that bucket and capture the keyID + secret.
+4. Set `S3_FILE_URL` to the bucket's public base URL.
 
 ### Database Setup
 
