@@ -22,10 +22,22 @@ export default defineConfig({
   output: "server",
   env: {
     schema: {
-      PUBLIC_STRIPE_KEY: envField.string({
+      PUBLIC_AUTHNET_CLIENT_KEY: envField.string({
         context: "client",
         access: "public",
         optional: false,
+      }),
+      PUBLIC_AUTHNET_API_LOGIN_ID: envField.string({
+        context: "client",
+        access: "public",
+        optional: false,
+      }),
+      PUBLIC_AUTHNET_ENVIRONMENT: envField.enum({
+        context: "client",
+        access: "public",
+        values: ["sandbox", "production"],
+        default: "sandbox",
+        optional: true,
       }),
       PUBLIC_SANITY_STUDIO_PROJECT_ID: envField.string({
         context: "client",

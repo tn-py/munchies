@@ -89,10 +89,13 @@ export default defineConfig({
       options: {
         providers: [
           {
-            resolve: "@medusajs/medusa/payment-stripe",
-            id: "stripe",
+            resolve: "./src/modules/authorize-net",
+            id: "authorizenet",
             options: {
-              apiKey: process.env.STRIPE_API_KEY,
+              apiLoginId: process.env.AUTHNET_API_LOGIN_ID,
+              transactionKey: process.env.AUTHNET_TRANSACTION_KEY,
+              signatureKey: process.env.AUTHNET_SIGNATURE_KEY,
+              environment: process.env.AUTHNET_ENVIRONMENT,
             },
           },
         ],
