@@ -7,6 +7,8 @@ settings:
 overrides:
   vite: ^6.4.1
 
+packageExtensionsChecksum: 5cab43ed760c6342498ce4332774ce03
+
 patchedDependencies:
   astro@5.16.11:
     hash: 3mvqtruzsbjt6zdqialzqgvlbu
@@ -20518,6 +20520,7 @@ snapshots:
       '@react-email/section': 0.0.17(react@18.3.1)
       '@react-email/tailwind': 2.0.3(@react-email/body@0.2.1(react@18.3.1))(@react-email/button@0.2.1(react@18.3.1))(@react-email/code-block@0.2.1(react@18.3.1))(@react-email/code-inline@0.0.6(react@18.3.1))(@react-email/container@0.0.16(react@18.3.1))(@react-email/heading@0.0.16(react@18.3.1))(@react-email/hr@0.0.12(react@18.3.1))(@react-email/img@0.0.12(react@18.3.1))(@react-email/link@0.0.13(react@18.3.1))(@react-email/preview@0.0.14(react@18.3.1))(@react-email/text@0.1.6(react@18.3.1))(react@18.3.1)
       '@react-email/text': 0.1.6(react@18.3.1)
+      '@types/react': 18.3.27
       react: 18.3.1
     transitivePeerDependencies:
       - react-dom
@@ -20578,6 +20581,7 @@ snapshots:
 
   '@react-email/render@2.0.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
+      '@types/react': 18.3.27
       html-to-text: 9.0.5
       prettier: 3.8.0
       react: 18.3.1

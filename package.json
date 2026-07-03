@@ -26,6 +26,18 @@
     "overrides": {
       "vite": "^6.4.1"
     },
+    "packageExtensions": {
+      "@react-email/components": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/render": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      }
+    },
     "patchedDependencies": {
       "astro@5.16.11": "patches/astro@5.16.11.patch"
     },
