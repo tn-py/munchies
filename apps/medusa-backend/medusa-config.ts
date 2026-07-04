@@ -73,11 +73,15 @@ export default defineConfig({
             resolve: "@medusajs/medusa/file-s3",
             id: "s3",
             options: {
-              authentication_method: "s3-iam-role",
               file_url: process.env.S3_FILE_URL,
+              access_key_id: process.env.S3_ACCESS_KEY_ID,
+              secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
               region: process.env.S3_REGION,
               bucket: process.env.S3_BUCKET,
               endpoint: process.env.S3_ENDPOINT,
+              // B2 works well with path-style; enable if virtual-host
+              // addressing misbehaves:
+              // additional_client_config: { forcePathStyle: true },
             },
           },
         ],
