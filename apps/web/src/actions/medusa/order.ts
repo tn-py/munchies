@@ -158,14 +158,17 @@ const setShippingMethod = defineAction({
   },
 });
 
+const paymentSessionSchema = z.object({
+  cart: z.any(),
+  data: z.object({
+    provider_id: z.string(),
+    data: z.record(z.any()).optional(),
+  }),
+});
+
 const initiatePaymentSession = defineAction({
   accept: "json",
-  input: z.object({
-    cart: z.any(),
-    data: z.object({
-      provider_id: z.string(),
-    }),
-  }),
+  input: paymentSessionSchema,
   async handler(input) {
     const res = await medusa.store.payment.initiatePaymentSession(
       input.cart,
@@ -177,6 +180,30 @@ const initiatePaymentSession = defineAction({
       return {
         status: "success",
         cart: updatedCart.cart,
+      };
+    }
+
+    return {
+      status: "error",
+      cart: null,
+    };
+  },
+});
+
+const updatePaymentSession = defineAction({
+  accept: "json",
+  input: paymentSessionSchema,
+  async handler(input) {
+    const res = await medusa.store.payment.initiatePaymentSession(
+      input.cart,
+      input.data
+    );
+
+    if (res.payment_collection) {
+      const { cart } = await medusa.store.cart.retrieve(input.cart.id);
+      return {
+        status: "success",
+        cart,
       };
     }
 
@@ -220,5 +247,6 @@ export const order = {
   setShippingMethod,
   setCheckoutAddresses,
   initiatePaymentSession,
+  updatePaymentSession,
   placeOrder,
 };

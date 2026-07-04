@@ -1,5 +1,5 @@
-export function isStripe(providerId?: string) {
-  return providerId?.startsWith("pp_stripe_");
+export function isAuthorizeNet(providerId?: string) {
+  return providerId?.startsWith("pp_authorizenet_");
 }
 
 export function isManual(providerId?: string) {

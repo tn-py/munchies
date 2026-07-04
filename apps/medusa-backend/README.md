@@ -9,7 +9,7 @@ This is the commerce engine powering the storefront, built with:
 - **Medusa v2** – Modern, modular e-commerce framework
 - **Admin Dashboard** – Built-in admin UI for managing products, orders, and customers
 - **Sanity Sync** – Automatic synchronization of products, collections, and categories to Sanity CMS
-- **Stripe Payments** – Secure payment processing
+- **Authorize.net Payments** – Custom Medusa v2 payment provider (auth, capture, refund, void, webhooks)
 - **Medusa Emails** – Built-in email sending service for transactional emails (order confirmations, shipping notifications, newsletter)
 - **Cached Queries** – Performance optimization using Medusa's Caching Module for database queries and computed data
 
@@ -20,7 +20,7 @@ This is the commerce engine powering the storefront, built with:
 - Node.js >= 20
 - PostgreSQL database
 - Redis (optional, for caching)
-- Stripe account
+- Authorize.net account (sandbox account works for local dev)
 
 ### Environment Variables
 
@@ -45,8 +45,11 @@ STORE_CORS=http://localhost:3000
 ADMIN_CORS=http://localhost:9000
 AUTH_CORS=http://localhost:9000
 
-# Stripe
-STRIPE_API_KEY=
+# Authorize.net (API Login ID + Transaction Key + Signature Key from the Merchant Interface)
+AUTHNET_API_LOGIN_ID=
+AUTHNET_TRANSACTION_KEY=
+AUTHNET_SIGNATURE_KEY=
+AUTHNET_ENVIRONMENT=sandbox
 
 # Medusa Publishable Key (for internal API calls)
 MEDUSA_PUBLISHABLE_KEY=

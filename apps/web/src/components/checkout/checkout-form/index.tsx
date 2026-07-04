@@ -8,7 +8,7 @@ import { Heading } from "@/components/shared/typography/heading";
 import { AddressForm } from "./address-form";
 import Delivery from "./delivery";
 import { Payment } from "./payment";
-import { Wrapper as StripeWrapper } from "./payment/wrapper";
+import { Wrapper as AcceptJsWrapper } from "./payment/wrapper";
 import { Review } from "./review";
 
 export function CheckoutForm({
@@ -26,7 +26,7 @@ export function CheckoutForm({
   >("addresses");
 
   return (
-    <StripeWrapper cart={cart}>
+    <AcceptJsWrapper cart={cart}>
       <div className="w-full">
         <Heading desktopSize="2xl" font="serif" mobileSize="xl" tag="h3">
           Checkout
@@ -57,6 +57,6 @@ export function CheckoutForm({
         />
         <Review active={step === "review"} cart={cart} />
       </div>
-    </StripeWrapper>
+    </AcceptJsWrapper>
   );
 }

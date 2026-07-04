@@ -10,7 +10,7 @@ An e-commerce storefront for Best Vapes — premium vapes, pods, and e-liquids. 
 | Commerce backend | [Medusa v2](https://medusajs.com) (Node.js) |
 | CMS | [Sanity v5](https://sanity.io) (project `no3xl4jw`, dataset `production`) |
 | Search | Orama on Cloudflare Workers |
-| Payments | Stripe |
+| Payments | Authorize.net (custom Medusa v2 provider + Accept.js) |
 | Styling | Tailwind CSS v4, React 19 |
 | Package manager | pnpm 9 (workspace monorepo) |
 | Build orchestration | Turborepo |
@@ -57,7 +57,10 @@ Fill in the values:
 | `JWT_SECRET` / `COOKIE_SECRET` | Random secret strings — use anything strong in prod |
 | `STORE_CORS` | Storefront origin — `http://localhost:3000` for local dev |
 | `ADMIN_CORS` / `AUTH_CORS` | Admin origin — `http://localhost:9000` for local dev |
-| `STRIPE_API_KEY` | Stripe secret key (test key for local dev) |
+| `AUTHNET_API_LOGIN_ID` | Authorize.net API Login ID (Merchant Interface → Account → API Credentials & Keys) |
+| `AUTHNET_TRANSACTION_KEY` | Authorize.net Transaction Key — **server secret**, authorizes/captures charges |
+| `AUTHNET_SIGNATURE_KEY` | Authorize.net Signature Key (128-char hex) for verifying webhook HMAC |
+| `AUTHNET_ENVIRONMENT` | `sandbox` or `production` — selects the gateway API endpoint |
 | `SANITY_API_TOKEN` | Sanity **editor** token with write access to the `production` dataset |
 | `SANITY_PROJECT_ID` | `no3xl4jw` |
 | `MEDUSA_PUBLISHABLE_KEY` | Filled in automatically after running `pnpm seed` |
@@ -75,8 +78,22 @@ cp apps/web/.env.example apps/web/.env
 | `SANITY_TOKEN` | Same Sanity editor token as above (server-only, never exposed to browser) |
 | `MEDUSA_BACKEND_URL` | `http://localhost:9000` for local dev |
 | `MEDUSA_PUBLISHABLE_KEY` | Copy from Medusa admin → Settings → API Keys after seeding |
-| `PUBLIC_STRIPE_KEY` | Stripe publishable key |
+| `PUBLIC_AUTHNET_CLIENT_KEY` | Authorize.net public Client Key (used by Accept.js to tokenize cards in-browser) |
+| `PUBLIC_AUTHNET_API_LOGIN_ID` | Authorize.net API Login ID (public; paired with the Client Key for Accept.js) |
+| `PUBLIC_AUTHNET_ENVIRONMENT` | `sandbox` or `production` — selects the Accept.js script URL |
 | `CF_ZONE_ID` / `CF_TOKEN` | Cloudflare cache purge credentials (production only, leave blank for local) |
+
+#### Authorize.net one-time setup
+
+Payments need a (sandbox) Authorize.net account — sign up at [developer.authorize.net](https://developer.authorize.net/hello_world/sandbox.html). Then, in the Merchant Interface:
+
+1. **API credentials** — Account → Settings → API Credentials & Keys: copy the **API Login ID** into `AUTHNET_API_LOGIN_ID` (backend) and `PUBLIC_AUTHNET_API_LOGIN_ID` (web), and generate a **Transaction Key** for `AUTHNET_TRANSACTION_KEY` (backend only — never expose it to the browser).
+2. **Signature Key** — same page: generate a Signature Key (128-char hex) for `AUTHNET_SIGNATURE_KEY`; it verifies webhook signatures.
+3. **Client Key** — Account → Settings → Manage Public Client Key: copy into `PUBLIC_AUTHNET_CLIENT_KEY`; Accept.js uses it to tokenize cards in-browser.
+4. **Webhooks** — Account → Settings → Webhooks: add an endpoint pointing at `https://<your-medusa-host>/hooks/payment/authorizenet_authorizenet` and subscribe to the payment events (authorization, capture, void, refund, fraud). Skip this for local dev unless you tunnel (e.g. ngrok) — checkout works without webhooks; they reconcile asynchronous status changes.
+5. Keep `AUTHNET_ENVIRONMENT` / `PUBLIC_AUTHNET_ENVIRONMENT` at `sandbox` until you switch to production credentials.
+
+> **Sandbox test card**: `4111 1111 1111 1111`, any future expiry, any CVC, any ZIP.
 
 ### 3 — Start the stack
 

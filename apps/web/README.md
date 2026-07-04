@@ -8,7 +8,7 @@ Astro 5 SSR storefront on Cloudflare.
 - React 19 + Tailwind CSS 4
 - Sanity v5 (visual editing, embedded studio at /cms)
 - Medusa JS SDK
-- Stripe payments
+- Authorize.net payments (Accept.js tokenization)
 - Dynamic OG images (Satori)
 
 ## Env Vars
@@ -23,8 +23,10 @@ SANITY_TOKEN=
 MEDUSA_BACKEND_URL=
 MEDUSA_PUBLISHABLE_KEY=
 
-# Stripe
-PUBLIC_STRIPE_KEY=
+# Authorize.net Accept.js (public client credentials)
+PUBLIC_AUTHNET_CLIENT_KEY=
+PUBLIC_AUTHNET_API_LOGIN_ID=
+PUBLIC_AUTHNET_ENVIRONMENT=sandbox
 
 # Cloudflare
 CF_ZONE_ID=
