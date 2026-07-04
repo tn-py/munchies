@@ -61,6 +61,19 @@ Fill in the values:
 | `SANITY_API_TOKEN` | Sanity **editor** token with write access to the `production` dataset |
 | `SANITY_PROJECT_ID` | `no3xl4jw` |
 | `MEDUSA_PUBLISHABLE_KEY` | Filled in automatically after running `pnpm seed` |
+| `S3_FILE_URL` | Public base URL images are served from, e.g. `https://<bucket>.s3.<region>.backblazeb2.com` |
+| `S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY` | Backblaze B2 Application Key (keyID + secret), scoped to the bucket |
+| `S3_REGION` / `S3_BUCKET` / `S3_ENDPOINT` | B2 region (e.g. `us-west-004`), bucket name, and endpoint `https://s3.<region>.backblazeb2.com` |
+
+#### Backblaze B2 one-time setup
+
+Admin image uploads (Products → Media) are stored in Backblaze B2 via the S3-compatible API:
+
+1. Create a **public** B2 bucket at [backblaze.com](https://www.backblaze.com/sign-up/cloud-storage) (a private bucket would need signed URLs or a CDN in front).
+2. Note the bucket's region from its endpoint (e.g. `us-west-004`) → `S3_REGION`, and set `S3_ENDPOINT=https://s3.<region>.backblazeb2.com`.
+3. Create an **Application Key** scoped to that bucket (App Keys → Add a New Application Key) → `S3_ACCESS_KEY_ID` (keyID) + `S3_SECRET_ACCESS_KEY` (applicationKey).
+4. Set `S3_FILE_URL` to the bucket's public base URL, e.g. `https://<bucket>.s3.<region>.backblazeb2.com`.
+5. After editing `.env`, reload it with `docker compose up -d --force-recreate medusa` (plain `docker restart` won't pick it up), then test an upload in Medusa admin → Products → Media.
 
 **Web storefront** (`apps/web/.env`):
 
