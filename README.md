@@ -83,6 +83,18 @@ cp apps/web/.env.example apps/web/.env
 | `PUBLIC_AUTHNET_ENVIRONMENT` | `sandbox` or `production` — selects the Accept.js script URL |
 | `CF_ZONE_ID` / `CF_TOKEN` | Cloudflare cache purge credentials (production only, leave blank for local) |
 
+#### Authorize.net one-time setup
+
+Payments need a (sandbox) Authorize.net account — sign up at [developer.authorize.net](https://developer.authorize.net/hello_world/sandbox.html). Then, in the Merchant Interface:
+
+1. **API credentials** — Account → Settings → API Credentials & Keys: copy the **API Login ID** into `AUTHNET_API_LOGIN_ID` (backend) and `PUBLIC_AUTHNET_API_LOGIN_ID` (web), and generate a **Transaction Key** for `AUTHNET_TRANSACTION_KEY` (backend only — never expose it to the browser).
+2. **Signature Key** — same page: generate a Signature Key (128-char hex) for `AUTHNET_SIGNATURE_KEY`; it verifies webhook signatures.
+3. **Client Key** — Account → Settings → Manage Public Client Key: copy into `PUBLIC_AUTHNET_CLIENT_KEY`; Accept.js uses it to tokenize cards in-browser.
+4. **Webhooks** — Account → Settings → Webhooks: add an endpoint pointing at `https://<your-medusa-host>/hooks/payment/authorizenet_authorizenet` and subscribe to the payment events (authorization, capture, void, refund, fraud). Skip this for local dev unless you tunnel (e.g. ngrok) — checkout works without webhooks; they reconcile asynchronous status changes.
+5. Keep `AUTHNET_ENVIRONMENT` / `PUBLIC_AUTHNET_ENVIRONMENT` at `sandbox` until you switch to production credentials.
+
+> **Sandbox test card**: `4111 1111 1111 1111`, any future expiry, any CVC, any ZIP.
+
 ### 3 — Start the stack
 
 ```bash
