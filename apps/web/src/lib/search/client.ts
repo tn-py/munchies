@@ -1,6 +1,4 @@
-interface Fetcher {
-  fetch(input: RequestInfo, init?: RequestInit): Promise<Response>;
-}
+import { SEARCH_URL } from "astro:env/server";
 
 export interface SearchParams {
   q?: string;
@@ -56,7 +54,6 @@ export interface SearchResult {
 }
 
 export async function searchProducts(
-  fetcher: Fetcher,
   params: SearchParams
 ): Promise<SearchResult> {
   const searchParams = new URLSearchParams();
@@ -81,8 +78,9 @@ export async function searchProducts(
   }
 
   const qs = searchParams.toString();
-  const url = qs ? `http://search/?${qs}` : "http://search/";
-  const response = await fetcher.fetch(url);
+  const baseUrl = SEARCH_URL.replace(/\/$/, "");
+  const url = qs ? `${baseUrl}/?${qs}` : `${baseUrl}/`;
+  const response = await fetch(url);
 
   if (!response.ok) {
     throw new Error(`Search failed: ${response.status}`);

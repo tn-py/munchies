@@ -1,6 +1,6 @@
 // @ts-check
 import { execSync } from "node:child_process";
-import cloudflare from "@astrojs/cloudflare";
+import node from "@astrojs/node";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import iosBackNavFix from "@tinloof/astro-ios-backnav-fix";
@@ -64,14 +64,9 @@ export default defineConfig({
         access: "secret",
         optional: false,
       }),
-      CF_ZONE_ID: envField.string({
+      SEARCH_URL: envField.string({
         context: "server",
         access: "public",
-        optional: false,
-      }),
-      CF_TOKEN: envField.string({
-        context: "server",
-        access: "secret",
         optional: false,
       }),
     },
@@ -95,7 +90,7 @@ export default defineConfig({
       noExternal: ["@medusajs/js-sdk", "sanity"],
     },
   },
-  adapter: cloudflare(),
+  adapter: node({ mode: "standalone" }),
   experimental: {
     fonts: [
       {
