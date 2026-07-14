@@ -76,9 +76,16 @@ function buildFacets(
   }));
 }
 
-export default {
-  async fetch(request: Request): Promise<Response> {
+export async function handleRequest(request: Request): Promise<Response> {
     const url = new URL(request.url);
+
+    if (url.pathname === "/health") {
+      return Response.json({ status: "ok" });
+    }
+
+    if (url.pathname !== "/") {
+      return new Response("Not found", { status: 404 });
+    }
     const query = url.searchParams.get("q") ?? "";
     const limit = Math.min(Number(url.searchParams.get("limit")) || 20, 100);
     const offset = Number(url.searchParams.get("offset")) || 0;
@@ -127,7 +134,7 @@ export default {
       if (collectionIds?.length) {
         whereWithoutCategory.collection_id = collectionIds;
       }
-      const categoryFacetResults = search(orama, {
+      const categoryFacetResults = await search(orama, {
         term: query,
         limit: 0,
         ...(Object.keys(whereWithoutCategory).length > 0 && {
@@ -146,7 +153,7 @@ export default {
       if (categoryIds?.length) {
         whereWithoutCollection.category_ids = categoryIds;
       }
-      const collectionFacetResults = search(orama, {
+      const collectionFacetResults = await search(orama, {
         term: query,
         limit: 0,
         ...(Object.keys(whereWithoutCollection).length > 0 && {
@@ -160,8 +167,8 @@ export default {
     }
 
     // Transform variants to include calculated_price for requested region
-    const hits = results.hits.map((hit: { document: StoredProduct }) => {
-      const product = hit.document;
+    const hits = results.hits.map((hit) => {
+      const product = hit.document as unknown as StoredProduct;
       return {
         ...product,
         variants: product.variants.map((variant) => ({
@@ -185,5 +192,8 @@ export default {
         categories: buildFacets(categoryFacets, metadata.categories),
       },
     });
-  },
+}
+
+export default {
+  fetch: handleRequest,
 };

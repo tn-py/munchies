@@ -1,6 +1,6 @@
-import { ImageResponse } from "@cloudflare/pages-plugin-vercel-og/api";
 import type { APIRoute } from "astro";
 import type { ReactElement } from "react";
+import satori from "satori";
 
 import ProductOg from "@/components/shared/product-og";
 import climateCrisisFont from "@/fonts/ClimateCrisis-Regular.ttf";
@@ -67,14 +67,17 @@ export const GET: APIRoute = async ({ params, request }) => {
       return new Response("Product not found", { status: 404 });
     }
 
-    const response = new ImageResponse(
+    const svg = await satori(
       ProductOg({ product }) as unknown as ReactElement,
       responseOptions
     );
 
-    response.headers.set("Cache-Tag", `products,products:${handle}`);
-
-    return response;
+    return new Response(svg, {
+      headers: {
+        "Cache-Control": "public, max-age=3600",
+        "Content-Type": "image/svg+xml",
+      },
+    });
   } catch (error) {
     console.error(error);
     return new Response("Internal server error", { status: 500 });

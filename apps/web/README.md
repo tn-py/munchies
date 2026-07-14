@@ -1,10 +1,10 @@
 # @apps/web
 
-Astro 5 SSR storefront on Cloudflare.
+Astro 5 SSR storefront running as a standalone Node server.
 
 ## Tech Stack
 
-- Astro 5.16 + @astrojs/cloudflare
+- Astro 5.16 + @astrojs/node
 - React 19 + Tailwind CSS 4
 - Sanity v5 (visual editing, embedded studio at /cms)
 - Medusa JS SDK
@@ -28,9 +28,9 @@ PUBLIC_AUTHNET_CLIENT_KEY=
 PUBLIC_AUTHNET_API_LOGIN_ID=
 PUBLIC_AUTHNET_ENVIRONMENT=sandbox
 
-# Cloudflare
-CF_ZONE_ID=
-CF_TOKEN=
+# Railway
+SEARCH_URL=http://localhost:3001
+SITE_URL=http://localhost:3000
 ```
 
 ## Project Structure
@@ -51,7 +51,7 @@ src/
 | -------------- | --------------------- |
 | `pnpm dev`     | Dev server on :3000   |
 | `pnpm build`   | Build for production  |
-| `pnpm deploy`  | Build + deploy to CF  |
+| `pnpm start`   | Start production SSR  |
 | `pnpm typegen` | Generate Sanity types |
 
 trigger deploy

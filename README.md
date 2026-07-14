@@ -91,10 +91,11 @@ cp apps/web/.env.example apps/web/.env
 | `SANITY_TOKEN` | Same Sanity editor token as above (server-only, never exposed to browser) |
 | `MEDUSA_BACKEND_URL` | `http://localhost:9000` for local dev |
 | `MEDUSA_PUBLISHABLE_KEY` | Copy from Medusa admin → Settings → API Keys after seeding |
+| `SEARCH_URL` | Search service URL, e.g. `http://localhost:3001` locally or its Railway private URL |
+| `SITE_URL` | Public storefront origin, e.g. the generated Railway domain |
 | `PUBLIC_AUTHNET_CLIENT_KEY` | Authorize.net public Client Key (used by Accept.js to tokenize cards in-browser) |
 | `PUBLIC_AUTHNET_API_LOGIN_ID` | Authorize.net API Login ID (public; paired with the Client Key for Accept.js) |
 | `PUBLIC_AUTHNET_ENVIRONMENT` | `sandbox` or `production` — selects the Accept.js script URL |
-| `CF_ZONE_ID` / `CF_TOKEN` | Cloudflare cache purge credentials (production only, leave blank for local) |
 
 #### Authorize.net one-time setup
 
@@ -255,18 +256,20 @@ Medusa is a standard Node.js app. Recommended hosts: [Railway](https://railway.a
    pnpm exec medusa db:migrate
    ```
 
-### Web storefront (Cloudflare Pages)
+### Web storefront (Railway)
 
-The storefront deploys to Cloudflare Pages via the `@astrojs/cloudflare` adapter.
+The storefront runs as an Astro standalone Node server.
 
-1. Connect the repo in the [Cloudflare Pages dashboard](https://dash.cloudflare.com).
-2. Set the build configuration:
-   - **Framework preset**: None (custom)
-   - **Build command**: `cd apps/web && pnpm build`
-   - **Build output directory**: `apps/web/dist`
-3. Add environment variables in Pages → Settings → Environment variables (all vars from `apps/web/.env`, **except** `CF_ZONE_ID` / `CF_TOKEN` which are set at the account level).
-4. Point `MEDUSA_BACKEND_URL` to your deployed Medusa URL.
-5. Deploy — Cloudflare will build and route traffic through Workers automatically.
+1. Set the build command to `pnpm --filter @apps/web build`.
+2. Set the start command to `pnpm --filter @apps/web start`.
+3. Point `MEDUSA_BACKEND_URL` to the Railway Medusa service.
+4. Set `SEARCH_URL` to the search service's Railway private URL.
+5. Set `SITE_URL` to the storefront's public Railway origin.
+6. Generate a public domain for the web service and deploy.
+
+The search service uses `pnpm --filter @apps/search build` and
+`pnpm --filter @apps/search start`. Configure `/health` as its healthcheck and
+keep it private.
 
 ### Sanity Studio
 

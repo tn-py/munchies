@@ -1,22 +1,27 @@
-# @apps/search
+# Search service
 
-Cloudflare Workers search service using Orama.
+Internal HTTP search service backed by Orama.
 
-## Overview
+## Development
 
-- Orama 3.1 search engine
-- Product search from Medusa
-- Deployed as Cloudflare Worker
+```bash
+pnpm sync
+pnpm dev
+```
 
-## Scripts
+The server listens on `HOST` (default `::`) and `PORT` (default `3001`).
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Local dev server |
-| `pnpm build` | Build (dry-run deploy) |
-| `pnpm deploy` | Sync + deploy to CF |
-| `pnpm sync` | Sync products from Medusa |
+Endpoints:
 
-## Config
+- `GET /health`
+- `GET /?q=&collection_id=&category_id=&region_id=&limit=&offset=`
 
-See `wrangler.jsonc` for worker configuration.
+## Railway
+
+- Build command: `pnpm --filter @apps/search build`
+- Start command: `pnpm --filter @apps/search start`
+- Healthcheck path: `/health`
+- Do not create a public domain; the web service calls it over Railway private networking.
+
+The build requires `MEDUSA_BACKEND_URL` and `MEDUSA_PUBLISHABLE_KEY` so the
+committed Orama dataset can be refreshed from Medusa.

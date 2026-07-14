@@ -9,7 +9,7 @@ const isDev = process.env.NODE_ENV === "development";
 const config = {
   baseUrl: isDev
     ? "http://localhost:3000"
-    : "https://munchies.tinloof.com",
+    : process.env.SITE_URL || "http://localhost:3000",
   defaultCountryCode: "us",
   // Supported country codes - paths not matching these will use default
   supportedCountryCodes: [

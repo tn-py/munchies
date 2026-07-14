@@ -31,7 +31,7 @@ const {
     return loadDictionary();
   },
   async results() {
-    return searchProducts(Astro.locals.runtime.env.SEARCH, {
+    return searchProducts({
       limit: 20,
       region_id: (await this.$.region)?.id,
       collection_id: collection,

@@ -28,35 +28,10 @@ const DEFAULT_SRCSET_WIDTHS = [
 
 interface BuildCloudflareUrlOptions {
   src: string;
-  width: number;
-  height: number;
-  fit?: "scale-down" | "contain" | "cover" | "crop" | "pad";
-  quality?: number;
-  format?: "auto" | "avif" | "webp" | "jpeg" | "png";
 }
 
-export function buildCloudflareUrl({
-  src,
-  width,
-  height,
-  fit = "cover",
-  quality = 75,
-  format = "avif",
-}: BuildCloudflareUrlOptions): string {
-  // cdn-cgi/image is only available on the Cloudflare edge; skip it locally
-  if (process.env.NODE_ENV === "development") {
-    return src;
-  }
-
-  const options = [
-    `width=${width}`,
-    `height=${height}`,
-    `fit=${fit}`,
-    `quality=${quality}`,
-    `format=${format}`,
-  ].join(",");
-
-  return `https://munchies.tinloof.com/cdn-cgi/image/${options}/${src}`;
+export function buildCloudflareUrl({ src }: BuildCloudflareUrlOptions): string {
+  return src;
 }
 
 interface GenerateSrcSetOptions {
@@ -72,41 +47,10 @@ interface GenerateSrcSetOptions {
 
 export function generateSrcSet({
   src,
-  width,
-  height,
-  aspectRatio,
-  fit = "cover",
-  quality = 75,
-  format = "avif",
   widths = DEFAULT_SRCSET_WIDTHS,
 }: GenerateSrcSetOptions): string {
-  const aspectRatioValues = aspectRatio?.split("/");
-  const aspectRatioWidth =
-    aspectRatioValues?.[0] != null
-      ? Number.parseFloat(aspectRatioValues[0])
-      : undefined;
-  const aspectRatioHeight =
-    aspectRatioValues?.[1] != null
-      ? Number.parseFloat(aspectRatioValues[1])
-      : undefined;
-
   return widths
-    .map((w) => {
-      const h =
-        aspectRatioWidth && aspectRatioHeight
-          ? Math.round((w / aspectRatioWidth) * aspectRatioHeight)
-          : Math.round((w / width) * height);
-
-      const url = buildCloudflareUrl({
-        src,
-        width: w,
-        height: h,
-        fit,
-        quality,
-        format,
-      });
-      return `${url} ${w}w`;
-    })
+    .map((w) => `${buildCloudflareUrl({ src })} ${w}w`)
     .join(", ");
 }
 
@@ -148,14 +92,7 @@ export function Image({
     quality,
     format,
   });
-  const finalSrc = buildCloudflareUrl({
-    src,
-    width,
-    height: computedHeight,
-    fit,
-    quality,
-    format,
-  });
+  const finalSrc = buildCloudflareUrl({ src });
 
   return (
     // biome-ignore assist/source/useSortedAttributes: https://github.com/vercel/next.js/blob/11e295089c5759891b82168c2cf7153731704519/packages/next/src/client/image-component.tsx#L272
