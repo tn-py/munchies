@@ -26,7 +26,11 @@
     "experimentalFullSupportEnabled": false
   },
   "files": {
-    "includes": ["!**/.medusa"]
+    "includes": [
+      "!**/.medusa",
+      "!**/.pr-local-20260705",
+      "!**/.pr-worktree-20260705"
+    ]
   },
   "formatter": {
     "includes": ["!**/*.astro"]

@@ -36,6 +36,101 @@
         "dependencies": {
           "@types/react": "^18.3.2"
         }
+      },
+      "@react-email/body": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/button": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/code-block": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/code-inline": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/column": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/container": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/font": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/head": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/heading": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/hr": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/html": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/img": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/link": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/markdown": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/preview": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/row": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/section": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/tailwind": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
+      },
+      "@react-email/text": {
+        "dependencies": {
+          "@types/react": "^18.3.2"
+        }
       }
     },
     "patchedDependencies": {
